@@ -10,7 +10,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 				className={cn(
 					'absolute inset-0 z-0',
 					'dark:bg-[radial-gradient(ellipse_at_bottom,_#262626_0%,_#000_100%)]',
-					'bg-[radial-gradient(ellipse_at_bottom,_#eef4ff_0%,_#e0ecff_70%,_#dbeafe_100%)]',
+					'bg-[radial-gradient(ellipse_at_bottom,_#cbdcff_0%,_#a9c8ff_60%,_#93bbff_100%)]',
 				)}
 			/>
 
