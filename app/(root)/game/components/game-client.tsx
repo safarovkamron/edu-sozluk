@@ -22,7 +22,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { wordsUnit1 } from '@/constants'
+import { wordsUnit1, wordsUnit2 } from '@/constants'
 import { IGameConfig, IRound } from '@/types/game.types'
 import { Card } from '@/types/ui.types'
 import { House } from 'lucide-react'
@@ -87,6 +87,7 @@ export default function GamePage({ searchParams }: GamePageProps) {
 		switch (level) {
 			case 'a1':
 				if (unit === 'unit1') return wordsUnit1
+				if (unit === 'unit2') return wordsUnit2
 				break
 		}
 
