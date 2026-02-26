@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://your-domain.com'),
+	metadataBase: new URL('https://edu-sozluk.vercel.app/'),
 
 	title: {
 		default: 'Sözlük – Interaktiv Lug‘at O‘yini',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'uz_UZ',
-		url: 'https://your-domain.com',
+		url: 'https://edu-sozluk.vercel.app/',
 		siteName: 'Sözlük',
 		title: 'Sözlük – Interaktiv Lug‘at O‘yini',
 		description:
