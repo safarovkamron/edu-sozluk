@@ -4,16 +4,20 @@ import GameResultPage from './components/result-client'
 export async function generateMetadata({
 	searchParams,
 }: {
-	searchParams: Record<string, string | undefined>
+	searchParams: Promise<Record<string, string | undefined>>
 }): Promise<Metadata> {
-	const level = searchParams.level || "Noma'lum"
-	const unit = searchParams.unit || ''
-	const correct = searchParams.correct || '0'
-	const wrong = searchParams.wrong || '0'
-	const time = searchParams.time || '0'
+	const params = await searchParams
+
+	const level = params.level || "Noma'lum"
+	const unit = params.unit || ''
+	const correct = params.correct || '0'
+	const wrong = params.wrong || '0'
+	const time = params.time || '0'
 
 	const title = `O'yin natijasi: ${level} ${unit}`
-	const description = `To'g'ri: ${correct}, Noto'g'ri: ${wrong}, Vaqt: ${Math.floor(Number(time) / 60)}m ${Number(time) % 60}s`
+	const description = `To'g'ri: ${correct}, Noto'g'ri: ${wrong}, Vaqt: ${Math.floor(
+		Number(time) / 60,
+	)}m ${Number(time) % 60}s`
 
 	return {
 		title,
@@ -35,17 +39,19 @@ export async function generateMetadata({
 	}
 }
 
-export default function ResultPage({
+export default async function ResultPage({
 	searchParams,
 }: {
-	searchParams: Record<string, string | undefined>
+	searchParams: Promise<Record<string, string | undefined>>
 }) {
-	const level = searchParams.level
-	const unit = searchParams.unit
-	const correct = searchParams.correct ? Number(searchParams.correct) : 0
-	const wrong = searchParams.wrong ? Number(searchParams.wrong) : 0
-	const time = searchParams.time ? Number(searchParams.time) : 0
-	const status = searchParams.status
+	const params = await searchParams
+
+	const level = params.level
+	const unit = params.unit
+	const correct = params.correct ? Number(params.correct) : 0
+	const wrong = params.wrong ? Number(params.wrong) : 0
+	const time = params.time ? Number(params.time) : 0
+	const status = params.status
 
 	return (
 		<GameResultPage

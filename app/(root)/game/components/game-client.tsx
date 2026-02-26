@@ -25,6 +25,7 @@ import {
 import { wordsUnit1 } from '@/constants'
 import { IGameConfig, IRound } from '@/types/game.types'
 import { Card } from '@/types/ui.types'
+import { House } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { generateGame, shuffle } from '../utils/lib'
@@ -134,7 +135,9 @@ export default function GamePage({ searchParams }: GamePageProps) {
 
 	const handleSelectCard = (card: Card) => {
 		if (
-			selectedCards.find(c => c.id === card.id && c.text === card.text) ||
+			selectedCards.find(
+				c => c.id === card.id && c.text === card.text && c.lang == card.lang,
+			) ||
 			correctCards.includes(card.id)
 		)
 			return
@@ -285,7 +288,17 @@ export default function GamePage({ searchParams }: GamePageProps) {
 						</p>
 					</div>
 
-					<Button onClick={startGame}>Boshlash</Button>
+					<Button onClick={startGame} className='cursor-pointer'>
+						Boshlash
+					</Button>
+					<Button
+						variant={'outline'}
+						className='cursor-pointer'
+						onClick={() => router.push('/')}
+					>
+						<House />
+						Bosh sahifa
+					</Button>
 				</div>
 			)}
 
@@ -297,13 +310,13 @@ export default function GamePage({ searchParams }: GamePageProps) {
 						</h2>
 
 						<div className='grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4'>
-							{currentRound.cards.map(card => {
+							{currentRound.cards.map((card, idx) => {
 								const isSelected = selectedCards.includes(card)
 								const isCorrect = correctCards.includes(card.id)
 
 								return (
 									<button
-										key={card.id + card.text}
+										key={card.id + card.text + `${idx}`}
 										onClick={() => handleSelectCard(card)}
 										disabled={isCorrect}
 										className={`

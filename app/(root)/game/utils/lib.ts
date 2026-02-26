@@ -10,6 +10,9 @@ export function shuffle<T>(array: T[]): T[] {
 	return arr
 }
 
+export const getLangKey = (card: Card) =>
+	Object.keys(card).find(key => key !== 'id')
+
 export function filterWords(words: Word[], from?: number, to?: number) {
 	if (!from || !to) return words
 	return words.filter(w => w.id >= from && w.id <= to)
@@ -19,8 +22,8 @@ export function generateRound(words: Word[], pairsCount: number) {
 	const selected = words.slice(0, pairsCount)
 	const cards: Card[] = []
 	selected.forEach(w => {
-		cards.push({ id: w.id, text: w.tr })
-		cards.push({ id: w.id, text: w.uz })
+		cards.push({ id: w.id, text: w.tr, lang: 'tr' })
+		cards.push({ id: w.id, text: w.uz, lang: 'uz' })
 	})
 	return shuffle(cards)
 }
