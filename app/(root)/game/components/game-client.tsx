@@ -276,7 +276,7 @@ export default function GamePage({ searchParams }: GamePageProps) {
 							<Input
 								type='number'
 								placeholder='Gacha'
-								min={10}
+								min={from ? from + 10 : 10}
 								max={words.length}
 								className='border p-2 rounded w-1/2'
 								value={to ?? ''}
