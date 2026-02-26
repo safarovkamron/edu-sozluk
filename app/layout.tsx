@@ -13,8 +13,75 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: 'Sözlük',
-	description: '',
+	metadataBase: new URL('https://your-domain.com'),
+
+	title: {
+		default: 'Sözlük – Interaktiv Lug‘at O‘yini',
+		template: '%s | Sözlük',
+	},
+
+	description:
+		'Sözlük — interaktiv lug‘at va tarjima o‘yini. So‘zlarni tez va samarali yodlang, natijalarni ulashing va do‘stlaringiz bilan bellashing.',
+
+	keywords: [
+		'sozluk',
+		'lugat oyini',
+		'uzbek turk lugat',
+		'til organish',
+		'vocabulary game',
+		'telegram share game',
+	],
+
+	authors: [{ name: 'Sözlük Team' }],
+	creator: 'Sözlük',
+	publisher: 'Sözlük',
+
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			'max-video-preview': -1,
+			'max-image-preview': 'large',
+			'max-snippet': -1,
+		},
+	},
+
+	openGraph: {
+		type: 'website',
+		locale: 'uz_UZ',
+		url: 'https://your-domain.com',
+		siteName: 'Sözlük',
+		title: 'Sözlük – Interaktiv Lug‘at O‘yini',
+		description:
+			'So‘zlarni tez yodlang, juftliklarni toping va natijani do‘stlaringiz bilan ulashing.',
+		images: [
+			{
+				url: '/og-image.jpg',
+				width: 1200,
+				height: 630,
+				alt: 'Sözlük Vocabulary Game',
+			},
+		],
+	},
+
+	twitter: {
+		card: 'summary_large_image',
+		title: 'Sözlük – Interaktiv Lug‘at O‘yini',
+		description: 'So‘zlarni tez yodlang va natijalarni ulashing.',
+		images: ['/og-image.jpg'],
+	},
+
+	icons: {
+		icon: '/favicon.ico',
+		shortcut: '/favicon-16x16.png',
+		apple: '/apple-touch-icon.png',
+	},
+
+	manifest: '/site.webmanifest',
+
+	category: 'education',
 }
 
 export default function RootLayout({
