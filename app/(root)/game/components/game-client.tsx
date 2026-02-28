@@ -42,7 +42,7 @@ export default function GamePage({ searchParams }: GamePageProps) {
 	const level = searchParams.level
 	const unit = searchParams.unit
 
-	const TOTAL_TIME = 300
+	const TOTAL_TIME = 1000
 	const [timeLeft, setTimeLeft] = useState(TOTAL_TIME)
 	const [isGameFinished, setIsGameFinished] = useState(false)
 	const [mode, setMode] = useState<'sequential' | 'random'>('random')
