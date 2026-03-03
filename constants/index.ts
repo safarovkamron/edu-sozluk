@@ -512,7 +512,7 @@ export const wordsUnit3 = [
   { id: 38, tr: 'hukuk', uz: 'huquq' },
   { id: 39, tr: 'içeri', uz: 'ichkari' },
   { id: 40, tr: 'iş yeri', uz: 'ish joyi' },
-  { id: 41, tr: 'işadamı', uz: 'tadbirkor, biznesmen' },
+  { id: 41, tr: 'iş adamı', uz: 'tadbirkor, biznesmen' },
   { id: 42, tr: 'işçi', uz: 'ishchi' },
   { id: 43, tr: 'kampus', uz: 'universitet shaharchasi' },
   { id: 44, tr: 'kanepe', uz: 'divan' },
