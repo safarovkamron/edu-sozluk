@@ -522,7 +522,7 @@ export const wordsUnit3 = [
   { id: 48, tr: 'kuaför', uz: 'sartarosh' },
   { id: 49, tr: 'kulüp', uz: 'klub' },
   { id: 50, tr: 'litre', uz: 'litr' },
-  { id: 51, tr: 'maç', uz: 'mach' },
+  { id: 51, tr: 'maç', uz: 'o`yin' },
   { id: 52, tr: 'mağaza', uz: 'do‘kon' },
   { id: 53, tr: 'manikür', uz: 'manyuker' },
   { id: 54, tr: 'market', uz: 'do‘kon, bozorcha' },
