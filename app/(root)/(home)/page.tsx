@@ -58,6 +58,7 @@ export default function HomePage() {
 								<SelectItem value='unit3'>Unit 3</SelectItem>
 								<SelectItem value='unit4'>Unit 4</SelectItem>
 								<SelectItem value='unit5'>Unit 5</SelectItem>
+								<SelectItem value='unit6'>Unit 6</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>

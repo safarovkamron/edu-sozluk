@@ -28,6 +28,7 @@ import {
 	wordsUnit3,
 	wordsUnit4,
 	wordsUnit5,
+	wordsUnit6
 } from '@/constants'
 import { IGameConfig, IRound } from '@/types/game.types'
 import { Card } from '@/types/ui.types'
@@ -97,6 +98,7 @@ export default function GamePage({ searchParams }: GamePageProps) {
 				if (unit === 'unit3') return wordsUnit3
 				if (unit === 'unit4') return wordsUnit4
 				if (unit === 'unit5') return wordsUnit5
+				if (unit === 'unit6') return wordsUnit6
 				break
 		}
 
