@@ -131,7 +131,7 @@ export default function GamePage({ searchParams }: GamePageProps) {
 	}
 
 	const startGame = () => {
-		const config: IGameConfig = { mode, from, to, pairsPerRound: 6 }
+		const config: IGameConfig = { mode, from, to, pairsPerRound: 12 }
 		const rounds = generateGame(words, config)
 		setSessionRounds(rounds)
 		setCurrentRoundIndex(0)
