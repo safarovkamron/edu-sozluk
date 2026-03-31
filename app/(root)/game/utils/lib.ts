@@ -15,7 +15,7 @@ export const getLangKey = (card: Card) =>
 
 export function filterWords(words: Word[], from?: number, to?: number) {
 	if (!from || !to) return words
-	return words.filter(w => w.id >= from && w.id <= to)
+	return words.slice(from - 1, to)
 }
 
 export function generateRound(words: Word[], pairsCount: number) {

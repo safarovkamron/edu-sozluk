@@ -27,7 +27,7 @@ import { IGameConfig, IRound } from '@/types/game.types'
 import { Card, Word } from '@/types/ui.types'
 import { House } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { generateGame, shuffle } from '../utils/lib'
 
 interface GamePageProps {
@@ -102,33 +102,28 @@ export default function GamePage({ searchParams }: GamePageProps) {
 		}
 	}, [level, unit])
 
-	const finishGame = useCallback(() => {
-		setIsGameFinished(prev => {
-			if (prev) return prev
-			if (timerRef.current) clearInterval(timerRef.current)
-			return true
-		})
+	const finishGame = () => {
+		if (isGameFinished) return
+
+		setIsGameFinished(true)
 
 		if (timerRef.current) {
 			clearInterval(timerRef.current)
 		}
 
-		setTimeLeft(timeLeft => {
-			const timeSpent = TOTAL_TIME - timeLeft
+		const timeSpent = TOTAL_TIME - timeLeft
 
-			const params = new URLSearchParams({
-				level: level || '',
-				unit: unit || '',
-				correct: correct.toString(),
-				wrong: wrong.toString(),
-				time: timeSpent.toString(),
-				status: 'completed',
-			})
-
-			router.push(`/game/result?${params.toString()}`)
-			return timeLeft
+		const params = new URLSearchParams({
+			level: level || '',
+			unit: unit || '',
+			correct: correct.toString(),
+			wrong: wrong.toString(),
+			time: timeSpent.toString(),
+			status: 'completed',
 		})
-	}, [level, unit, correct, wrong, router])
+
+		router.push(`/game/result?${params.toString()}`)
+	}
 
 	useEffect(() => {
 		if (!gameStarted) return
@@ -137,7 +132,6 @@ export default function GamePage({ searchParams }: GamePageProps) {
 			setTimeLeft(prev => {
 				if (prev <= 1) {
 					clearInterval(timerRef.current!)
-					finishGame()
 					return 0
 				}
 				return prev - 1
@@ -149,7 +143,14 @@ export default function GamePage({ searchParams }: GamePageProps) {
 				clearInterval(timerRef.current)
 			}
 		}
-	}, [gameStarted, finishGame])
+	}, [gameStarted])
+
+	useEffect(() => {
+		if (timeLeft === 0 && gameStarted) {
+			finishGame()
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [timeLeft])
 
 	if (!level || !unit) {
 		return <p className='text-center mt-20'>Daraja va unit tanlanishi shart!</p>
@@ -158,6 +159,10 @@ export default function GamePage({ searchParams }: GamePageProps) {
 	const startGame = () => {
 		const config: IGameConfig = { mode, from, to, pairsPerRound: 8 }
 		const rounds = generateGame(words, config)
+		if (rounds.length === 0) {
+			alert('Tanlangan intervalda so`z topilmadi. Boshqa interval tanlang.')
+			return
+		}
 		setSessionRounds(rounds)
 		setCurrentRoundIndex(0)
 		setSelectedCards([])
