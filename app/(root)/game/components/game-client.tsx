@@ -29,6 +29,7 @@ import { a1WordsUnit3 } from '@/constants/a1-unit-3'
 import { a1WordsUnit4 } from '@/constants/a1-unit-4'
 import { a1WordsUnit5 } from '@/constants/a1-unit-5'
 import { a1WordsUnit6 } from '@/constants/a1-unit-6'
+import { a2WordsUnit1 } from '@/constants/a2-unit-1'
 import { IGameConfig, IRound } from '@/types/game.types'
 import { Card } from '@/types/ui.types'
 import { House } from 'lucide-react'
@@ -98,6 +99,9 @@ export default function GamePage({ searchParams }: GamePageProps) {
 				if (unit === 'unit4') return a1WordsUnit4
 				if (unit === 'unit5') return a1WordsUnit5
 				if (unit === 'unit6') return a1WordsUnit6
+				break
+			case 'a2':
+				if (unit === 'unit1') return a2WordsUnit1
 				break
 		}
 

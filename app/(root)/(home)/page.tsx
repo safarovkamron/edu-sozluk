@@ -43,6 +43,7 @@ export default function HomePage() {
 						<SelectContent>
 							<SelectGroup>
 								<SelectItem value='a1'>A1</SelectItem>
+								<SelectItem value='a2'>A2</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>
@@ -52,14 +53,21 @@ export default function HomePage() {
 							<SelectValue placeholder='Ünite tanlang / Unitni tanlang' />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectGroup>
-								<SelectItem value='unit1'>Unit 1</SelectItem>
-								<SelectItem value='unit2'>Unit 2</SelectItem>
-								<SelectItem value='unit3'>Unit 3</SelectItem>
-								<SelectItem value='unit4'>Unit 4</SelectItem>
-								<SelectItem value='unit5'>Unit 5</SelectItem>
-								<SelectItem value='unit6'>Unit 6</SelectItem>
-							</SelectGroup>
+							{level == 'a1' && (
+								<SelectGroup>
+									<SelectItem value='unit1'>Unit 1</SelectItem>
+									<SelectItem value='unit2'>Unit 2</SelectItem>
+									<SelectItem value='unit3'>Unit 3</SelectItem>
+									<SelectItem value='unit4'>Unit 4</SelectItem>
+									<SelectItem value='unit5'>Unit 5</SelectItem>
+									<SelectItem value='unit6'>Unit 6</SelectItem>
+								</SelectGroup>
+							)}
+							{level == 'a2' && (
+								<SelectGroup>
+									<SelectItem value='unit1'>Unit 1</SelectItem>
+								</SelectGroup>
+							)}
 						</SelectContent>
 					</Select>
 
