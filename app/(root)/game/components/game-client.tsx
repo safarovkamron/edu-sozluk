@@ -36,6 +36,8 @@ import { House } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { generateGame, shuffle } from '../utils/lib'
+import { a2WordsUnit3 } from '@/constants/a2-unit-3'
+import { a2WordsUnit2 } from '@/constants/a2-unit-2'
 
 interface GamePageProps {
 	searchParams: {
@@ -102,6 +104,8 @@ export default function GamePage({ searchParams }: GamePageProps) {
 				break
 			case 'a2':
 				if (unit === 'unit1') return a2WordsUnit1
+				if (unit === 'unit2') return a2WordsUnit2
+				if (unit === 'unit3') return a2WordsUnit3
 				break
 		}
 
