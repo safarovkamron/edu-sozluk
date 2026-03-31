@@ -2,14 +2,8 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 
-import Header from './components/header'
-
-import {
-	FlipButton,
-	FlipButtonBack,
-	FlipButtonFront,
-} from '@/components/animate-ui/components/buttons/flip'
 import {
 	Select,
 	SelectContent,
@@ -18,6 +12,32 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+
+const Header = dynamic(() => import('./components/header'), { ssr: false })
+
+const FlipButton = dynamic(
+	() =>
+		import('@/components/animate-ui/components/buttons/flip').then(m => ({
+			default: m.FlipButton,
+		})),
+	{ ssr: false },
+)
+
+const FlipButtonFront = dynamic(
+	() =>
+		import('@/components/animate-ui/components/buttons/flip').then(m => ({
+			default: m.FlipButtonFront,
+		})),
+	{ ssr: false },
+)
+
+const FlipButtonBack = dynamic(
+	() =>
+		import('@/components/animate-ui/components/buttons/flip').then(m => ({
+			default: m.FlipButtonBack,
+		})),
+	{ ssr: false },
+)
 
 export default function HomePage() {
 	const router = useRouter()

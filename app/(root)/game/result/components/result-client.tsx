@@ -1,10 +1,25 @@
 'use client'
 
-import { FireworksBackground } from '@/components/animate-ui/components/backgrounds/fireworks'
-import { CountingNumber } from '@/components/animate-ui/primitives/texts/counting-number'
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { Share2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+
+const FireworksBackground = dynamic(
+	() =>
+		import('@/components/animate-ui/components/backgrounds/fireworks').then(
+			m => ({ default: m.FireworksBackground }),
+		),
+	{ ssr: false },
+)
+
+const CountingNumber = dynamic(
+	() =>
+		import('@/components/animate-ui/primitives/texts/counting-number').then(
+			m => ({ default: m.CountingNumber }),
+		),
+	{ ssr: false },
+)
 
 interface GameResultPageProps {
 	level?: string

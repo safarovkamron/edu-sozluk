@@ -23,21 +23,12 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-import { a1WordsUnit1 } from '@/constants/a1-unit-1'
-import { a1WordsUnit2 } from '@/constants/a1-unit-2'
-import { a1WordsUnit3 } from '@/constants/a1-unit-3'
-import { a1WordsUnit4 } from '@/constants/a1-unit-4'
-import { a1WordsUnit5 } from '@/constants/a1-unit-5'
-import { a1WordsUnit6 } from '@/constants/a1-unit-6'
-import { a2WordsUnit1 } from '@/constants/a2-unit-1'
 import { IGameConfig, IRound } from '@/types/game.types'
-import { Card } from '@/types/ui.types'
+import { Card, Word } from '@/types/ui.types'
 import { House } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { generateGame, shuffle } from '../utils/lib'
-import { a2WordsUnit3 } from '@/constants/a2-unit-3'
-import { a2WordsUnit2 } from '@/constants/a2-unit-2'
 
 interface GamePageProps {
 	searchParams: {
@@ -65,52 +56,79 @@ export default function GamePage({ searchParams }: GamePageProps) {
 	const [correct, setCorrect] = useState(0)
 	const [wrong, setWrong] = useState(0)
 	const [gameStarted, setGameStarted] = useState(false)
+	const [words, setWords] = useState<Word[]>([])
 	const timerRef = useRef<NodeJS.Timeout | null>(null)
 
-	const finishGame = () => {
-		if (isGameFinished) return
+	useEffect(() => {
+		if (!level || !unit) {
+			setWords([])
+			return
+		}
 
-		setIsGameFinished(true)
+		let cancelled = false
+
+		const loadWords = async () => {
+			let data: Word[] = []
+
+			if (level === 'a1') {
+				if (unit === 'unit1')
+					data = (await import('@/constants/a1-unit-1')).a1WordsUnit1
+				else if (unit === 'unit2')
+					data = (await import('@/constants/a1-unit-2')).a1WordsUnit2
+				else if (unit === 'unit3')
+					data = (await import('@/constants/a1-unit-3')).a1WordsUnit3
+				else if (unit === 'unit4')
+					data = (await import('@/constants/a1-unit-4')).a1WordsUnit4
+				else if (unit === 'unit5')
+					data = (await import('@/constants/a1-unit-5')).a1WordsUnit5
+				else if (unit === 'unit6')
+					data = (await import('@/constants/a1-unit-6')).a1WordsUnit6
+			} else if (level === 'a2') {
+				if (unit === 'unit1')
+					data = (await import('@/constants/a2-unit-1')).a2WordsUnit1
+				else if (unit === 'unit2')
+					data = (await import('@/constants/a2-unit-2')).a2WordsUnit2
+				else if (unit === 'unit3')
+					data = (await import('@/constants/a2-unit-3')).a2WordsUnit3
+			}
+
+			if (!cancelled) setWords(data)
+		}
+
+		loadWords()
+
+		return () => {
+			cancelled = true
+		}
+	}, [level, unit])
+
+	const finishGame = useCallback(() => {
+		setIsGameFinished(prev => {
+			if (prev) return prev
+			if (timerRef.current) clearInterval(timerRef.current)
+			return true
+		})
 
 		if (timerRef.current) {
 			clearInterval(timerRef.current)
 		}
 
-		const timeSpent = TOTAL_TIME - timeLeft
+		setTimeLeft(timeLeft => {
+			const timeSpent = TOTAL_TIME - timeLeft
 
-		const params = new URLSearchParams({
-			level: level || '',
-			unit: unit || '',
-			correct: correct.toString(),
-			wrong: wrong.toString(),
-			time: timeSpent.toString(),
-			status: 'completed',
+			const params = new URLSearchParams({
+				level: level || '',
+				unit: unit || '',
+				correct: correct.toString(),
+				wrong: wrong.toString(),
+				time: timeSpent.toString(),
+				status: 'completed',
+			})
+
+			router.push(`/game/result?${params.toString()}`)
+			return timeLeft
 		})
-
-		router.push(`/game/result?${params.toString()}`)
-	}
-
-	const words = useMemo(() => {
-		if (!level || !unit) return []
-
-		switch (level) {
-			case 'a1':
-				if (unit === 'unit1') return a1WordsUnit1
-				if (unit === 'unit2') return a1WordsUnit2
-				if (unit === 'unit3') return a1WordsUnit3
-				if (unit === 'unit4') return a1WordsUnit4
-				if (unit === 'unit5') return a1WordsUnit5
-				if (unit === 'unit6') return a1WordsUnit6
-				break
-			case 'a2':
-				if (unit === 'unit1') return a2WordsUnit1
-				if (unit === 'unit2') return a2WordsUnit2
-				if (unit === 'unit3') return a2WordsUnit3
-				break
-		}
-
-		return []
-	}, [level, unit])
+	}, [level, unit, correct, wrong, router])
 
 	useEffect(() => {
 		if (!gameStarted) return
@@ -131,14 +149,14 @@ export default function GamePage({ searchParams }: GamePageProps) {
 				clearInterval(timerRef.current)
 			}
 		}
-	}, [gameStarted])
+	}, [gameStarted, finishGame])
 
 	if (!level || !unit) {
 		return <p className='text-center mt-20'>Daraja va unit tanlanishi shart!</p>
 	}
 
 	const startGame = () => {
-		const config: IGameConfig = { mode, from, to, pairsPerRound: 12 }
+		const config: IGameConfig = { mode, from, to, pairsPerRound: 8 }
 		const rounds = generateGame(words, config)
 		setSessionRounds(rounds)
 		setCurrentRoundIndex(0)
